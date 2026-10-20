@@ -1,0 +1,141 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Monitor | Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="brand">
+            <span class="brand-icon">⌁</span>
+            <span>Pulse<span class="brand-light">Monitor</span></span>
+        </div>
+
+        <p class="nav-label">MONITORING</p>
+        <a href="/dashboard" class="nav-item active">▦ &nbsp; Dashboard</a>
+        <a href="#request-logs" class="nav-item">≡ &nbsp; Request Logs</a>
+
+        <div class="sidebar-bottom">
+            <span class="status-dot"></span>
+            API monitoring active
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="topbar">
+            <div>
+                <p class="eyebrow">OVERVIEW</p>
+                <h1>API Dashboard</h1>
+                <p class="subtitle">Monitor your API performance and activity.</p>
+            </div>
+
+            <div class="live-status">
+                <span class="status-dot"></span>
+                System online
+            </div>
+        </header>
+
+        <section class="summary-grid">
+            <article class="summary-card">
+                <p>Total Requests</p>
+                <h2 id="total-requests">—</h2>
+                <span class="card-note">Recorded API calls</span>
+            </article>
+
+            <article class="summary-card">
+                <p>Successful Requests</p>
+                <h2 id="successful-requests">—</h2>
+                <span class="card-note">Responses with 2xx status</span>
+            </article>
+
+            <article class="summary-card">
+                <p>Failed Requests</p>
+                <h2 id="failed-requests">—</h2>
+                <span class="card-note">Responses with 4xx or 5xx status</span>
+            </article>
+
+            <article class="summary-card">
+                <p>Avg. Response Time</p>
+                <h2 id="average-duration">— <small>ms</small></h2>
+                <span class="card-note">Across displayed requests</span>
+            </article>
+        </section>
+
+        <section class="panel" id="request-logs">
+            <div class="panel-header">
+                <div>
+                    <h2>Request Logs</h2>
+                    <p class="subtitle">Inspect recent API activity.</p>
+                </div>
+
+                <button id="refresh-button" class="refresh-button">
+                    ↻ Refresh
+                </button>
+            </div>
+
+            <div class="filters">
+                <input
+                    id="search-input"
+                    type="search"
+                    placeholder="Search endpoint..."
+                    aria-label="Search endpoint"
+                >
+
+                <select id="status-filter" aria-label="Filter by status">
+                    <option value="">All statuses</option>
+                    <option value="2">2xx · Success</option>
+                    <option value="4">4xx · Client errors</option>
+                    <option value="5">5xx · Server errors</option>
+                </select>
+
+                <select id="method-filter" aria-label="Filter by method">
+                    <option value="">All methods</option>
+                    <option value="GET">GET</option>
+                    <option value="POST">POST</option>
+                    <option value="PUT">PUT</option>
+                    <option value="PATCH">PATCH</option>
+                    <option value="DELETE">DELETE</option>
+                </select>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>METHOD</th>
+                            <th>ENDPOINT</th>
+                            <th>STATUS</th>
+                            <th>DURATION</th>
+                            <th>TIMESTAMP</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="logs-table-body">
+                        <tr>
+                            <td colspan="5" class="empty-state">
+                                Loading request logs...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="table-footer">
+                <span id="log-count">Waiting for logs...</span>
+                <span>Auto-refresh: 10 seconds</span>
+            </div>
+        </section>
+
+        <footer>
+            PulseMonitor <span>·</span> Built with Flask and SQLite
+        </footer>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>

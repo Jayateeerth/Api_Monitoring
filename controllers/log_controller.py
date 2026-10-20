@@ -1,5 +1,5 @@
 
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request , render_template
 
 from services.log_service import fetch_logs
 
@@ -66,3 +66,10 @@ def logs():
 
     except ValueError as exc:
         return jsonify({"error": str(exc)}), 400
+
+
+
+@api_bp.get("/dashboard")
+def dashboard():
+    return render_template("dashboard.html")
+
